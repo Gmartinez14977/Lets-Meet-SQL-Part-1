@@ -1,0 +1,100 @@
+﻿1. Requested_Insights_Sales
+
+
+/*  1. Active Cities
+What cities have active members? Are there any cities listed in the city table with no active members?*/
+    
+SELECT 
+    city,
+    member_status
+FROM
+    grp_member
+GROUP BY city
+HAVING member_status ='Active';
+
+
+-- San Francisco, New York, Chicago,West New York, South San Francisco,North Chicago,Chicago Heights, East Chicago, and Chicago Ridge are the cities that have active members*/
+
+
+SELECT 
+    city, 
+    state
+FROM city
+WHERE
+    city NOT IN (SELECT 
+            city
+        FROM
+            grp_member
+        WHERE
+            member_status ='Active'
+        GROUP BY city);
+        
+-- New York Mills in the State of New York, New York Mills in the state of Minnesota, and Chicago Park in the state of California are cities with no active members.--
+
+
+/* 2. Groups
+  How many groups are currently open, waiting for approval, and or closed?*/
+SELECT
+        join_mode, 
+        COUNT(join_mode)
+FROM grp
+GROUP BY join_mode;
+
+
+-- A total of 3,602 groups are currently open, 723 are waiting for approval, and 15 are closed.
+
+
+/* 3. Categories
+ What are the five most popular categories? What are the least five categories? */
+SELECT DISTINCT
+    c.category_name,
+    COUNT(g.group_id)
+FROM
+    category AS c
+        JOIN grp AS g ON c.category_id = g.category_id
+GROUP BY c.category_name
+ORDER BY COUNT(g.group_id) DESC
+LIMIT 5;
+
+
+-- The five most popular categories are Tech, Career and Bussiness, Socializing, Health and Wellbeing, and Langunage and Ethnic Identity.
+
+
+SELECT DISTINCT
+    c.category_name,
+    COUNT(g.group_id)
+FROM
+    category AS c
+        JOIN
+    grp AS g ON c.category_id = g.category_id
+GROUP BY c.category_name
+ORDER BY COUNT(g.group_id) ASC
+LIMIT 5;
+
+
+-- The five least popular group categories are Paranormal, Cars and Motorcycles, Sci-Fi and Fantasy, Lifestyle, and Hobbies and craft.
+
+
+/* 4. Memberscity           
+How many members do we have?  What percentage of members are based in Chicago?*/
+SELECT 
+    COUNT(DISTINCT (member_id))
+FROM
+    grp_member;
+    
+-- How many members do we have? 
+-- There is a total of 39,980 members.
+
+
+SELECT 
+    (SELECT 
+            COUNT(DISTINCT (member_id))
+        FROM
+            grp_member
+        WHERE
+            city = 'Chicago') / (SELECT 
+            COUNT(DISTINCT (member_id))
+        FROM
+            grp_member);
+    
+-- 21.19% of members are based in Chicago.
