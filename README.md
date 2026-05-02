@@ -1,0 +1,2 @@
+In this initial phase, the goal was to understand the team’s requirements and deliver data-driven insights to address their needs. During this stage of the project, two types of key insights were developed: Insights derived from specific questions posed by the sales team regarding groups, members, and categories. Insights independently identified through exploratory data analysis of groups, members, and categories.
+
