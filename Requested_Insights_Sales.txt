@@ -9,8 +9,8 @@ SELECT
     member_status
 FROM
     grp_member
-GROUP BY city
-HAVING member_status ='Active';
+WHERE member_status='Active'
+GROUP BY city;
 
 
 -- San Francisco, New York, Chicago,West New York, South San Francisco,North Chicago,Chicago Heights, East Chicago, and Chicago Ridge are the cities that have active members*/
